@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #0d1117;
+  color: whitesmoke;
+}
+
+.App-header {
+  margin: 15px auto 30px auto;
+  display: flex;
+  justify-content: space-between;
+  width: 360px;
+  padding: 10px;
+}
+
+.App-header h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.App-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}

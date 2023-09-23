@@ -1,0 +1,70 @@
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+
+  max-width: 350px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.body {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.body img {
+  aspect-ratio: 9 / 16;
+  width: 50%;
+  border-radius: 10px;
+}
+
+.body_checklist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+
+.body_checklist-button {
+  width: 80px;
+  height: 40px;
+  border-radius: 20px;
+  cursor: pointer;
+  background-color: #e1e100;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.body_checklist-checks {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checks {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.checks div {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.checks.left div {
+  background-color: #ff0000;
+}
+
+.checks.done div {
+  background-color: #00ff00;
+}
