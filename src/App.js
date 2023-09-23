@@ -24,7 +24,7 @@ const App = () => {
   const updateDrop = async (name, count) => {
     try {
       // Send a POST request to the back-end to update drop information
-      await Axios.post("http://localhost:3500/update-drop", { name, count });
+      await Axios.post("https://drops-client-theta.vercel.app/update-drop", { name, count });
       setUpdateTrigger(!updateTrigger);
     } catch (error) {
       console.error("Error updating drop:", error);
@@ -35,7 +35,7 @@ const App = () => {
   const fetchDropInfo = async () => {
     try {
       // Send a GET request to the back-end to fetch drop information
-      const response = await Axios.get("http://localhost:3500/get-drop-info");
+      const response = await Axios.get("https://drops-client-theta.vercel.app/get-drop-info");
       return response.data; // Assuming the response contains drop information
     } catch (error) {
       console.error("Error fetching drop information:", error);
