@@ -10,38 +10,45 @@ import { useEffect, useState } from "react";
 const App = () => {
   // Use State for the Data
   const [dropInfo, setDropInfo] = useState([]);
-  // Use State for update trigger
-  const [updateTrigger, setUpdateTrigger] = useState(false);
 
-  // Use Effect to fetch the data
-  useEffect(() => {
-    // Fetch drop information when the component mounts
-    fetchDropInfo().then((data) => setDropInfo(data));
-    console.log(dropInfo);
-  }, [updateTrigger, dropInfo]);
+  // Define a function to format the date
+  function formatDate(date) {
+    const options = { day: "numeric", month: "long", year: "numeric" };
+    return new Date(date).toLocaleDateString(undefined, options);
+  }
+  const currentDate = new Date();
+  const formattedDate = formatDate(currentDate);
 
   // Define a function to update drop information
   const updateDrop = async (name, count) => {
     try {
       // Send a POST request to the back-end to update drop information
-      await Axios.post("https://drops-client-theta.vercel.app/update-drop", { name, count });
-      setUpdateTrigger(!updateTrigger);
+      await Axios.post(`${baseURL}/update-drop`, { name, count, formattedDate });
+      fetchDropInfo(formattedDate).then((data) => setDropInfo(data));
     } catch (error) {
       console.error("Error updating drop:", error);
     }
   };
 
   // Define a function to fetch drop information
-  const fetchDropInfo = async () => {
+  const fetchDropInfo = async (formattedDate) => {
     try {
       // Send a GET request to the back-end to fetch drop information
-      const response = await Axios.get("https://drops-client-theta.vercel.app/get-drop-info");
+      console.log(formattedDate);
+      const response = await Axios.get(`${baseURL}/get-drop-info?formattedDate=${formattedDate}`);
       return response.data; // Assuming the response contains drop information
     } catch (error) {
       console.error("Error fetching drop information:", error);
       return []; // Return an empty array in case of an error
     }
   };
+
+  // Use Effect to fetch the data
+  useEffect(() => {
+    // Fetch drop information when the component mounts
+    fetchDropInfo(formattedDate).then((data) => setDropInfo(data));
+  }, [formattedDate]);
+  const baseURL = "https://drops-back.vercel.app";
 
   return (
     <div className="App">
@@ -50,7 +57,7 @@ const App = () => {
         <h1>Day-3</h1>
       </header>
       <main className="App-main">
-        {dropInfo.map((info, index) => {
+        {dropInfo?.map?.((info, index) => {
           let times, imgUrl;
 
           if (info.name === "Homide") {
