@@ -10,11 +10,12 @@ import { useEffect, useState } from "react";
 const App = () => {
   // Use State for the Data
   const [dropInfo, setDropInfo] = useState([]);
+  const baseURL = "https://drops-back.vercel.app";
 
   // Define a function to format the date
   function formatDate(date) {
     const options = { day: "numeric", month: "long", year: "numeric" };
-    return new Date(date).toLocaleDateString(undefined, options);
+    return new Date(date).toLocaleDateString("en-US", options);
   }
   const currentDate = new Date();
   const formattedDate = formatDate(currentDate);
@@ -48,7 +49,6 @@ const App = () => {
     // Fetch drop information when the component mounts
     fetchDropInfo(formattedDate).then((data) => setDropInfo(data));
   }, [formattedDate]);
-  const baseURL = "https://drops-back.vercel.app";
 
   return (
     <div className="App">
