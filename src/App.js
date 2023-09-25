@@ -122,7 +122,7 @@ const App = () => {
 
           if (week > 1 && info.name === "Homide") {
             return;
-          } else if (week > 4 && info.name === "Milflox") {
+          } else if (week > 2 && info.name === "Milflox") {
             return;
           } else return <Sections key={index} times={times} name={info.name} imgUrl={imgUrl} done={info.count} buttonClick={() => updateDrop(info.name, info.count + 1, currentTime)} />;
         })}
