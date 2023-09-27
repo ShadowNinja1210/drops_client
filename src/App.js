@@ -116,7 +116,28 @@ const App = () => {
             times = 4;
             imgUrl = Milflox;
           } else {
-            times = 8;
+            switch (week) {
+              case 1:
+                times = 8;
+                break;
+              case 2:
+                times = 6;
+                break;
+              case 3:
+                times = 4;
+                break;
+              case 4:
+                times = 3;
+                break;
+              case 5:
+                times = 2;
+                break;
+              case 6:
+                times = 1;
+                break;
+              default:
+                times = 0; // Default value when week is not 1 to 6
+            }
             imgUrl = Pred_Forte;
           }
 
