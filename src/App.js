@@ -37,7 +37,7 @@ const App = () => {
 
   const startDate = new Date("September 21, 2023");
 
-  week = Math.ceil(dateDiffInDays(startDate, currentDate) / 7);
+  week = Math.ceil((dateDiffInDays(startDate, currentDate) + 1) / 7);
 
   const options = {
     hour: "numeric", // "numeric", "2-digit"
