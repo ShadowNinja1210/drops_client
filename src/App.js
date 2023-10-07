@@ -1,7 +1,7 @@
 import Sections from "./components/Sections";
 import Axios from "axios";
-import Homide from "./assets/Homide.jpg";
-import Milflox from "./assets/Milflox.jpg";
+import Vigamox from "./assets/Vigamox.jpg";
+import Optive from "./assets/Optive.jpg";
 import Pred_Forte from "./assets/Pred_Forte.jpg";
 
 import "./app.css";
@@ -12,7 +12,7 @@ const App = () => {
   const [dropInfo, setDropInfo] = useState([]);
   const [showtime, setShowtime] = useState("");
   const baseURL = "https://drops-back.vercel.app";
-  let week = 0;
+  let day_num = 0;
 
   // Define a function to format the date
   function formatDate(date) {
@@ -35,9 +35,9 @@ const App = () => {
     return Math.abs(Math.floor(daysDiff)); // Use Math.abs to get a positive value
   }
 
-  const startDate = new Date("September 21, 2023");
+  const startDate = new Date("October 07, 2023");
 
-  week = Math.ceil((dateDiffInDays(startDate, currentDate) + 1) / 7);
+  day_num = Math.ceil(dateDiffInDays(startDate, currentDate) + 1);
 
   const options = {
     hour: "numeric", // "numeric", "2-digit"
@@ -96,8 +96,8 @@ const App = () => {
     <div className="App">
       <header className="App-header">
         <div className="time">
-          <h2>Week No.</h2>
-          <h1>{week}</h1>
+          <h2>Day No.</h2>
+          <h1>{day_num}</h1>
         </div>
         <div className="time">
           <h2>Last updated</h2>
@@ -109,41 +109,26 @@ const App = () => {
         {dropInfo?.map?.((info, index) => {
           let times, imgUrl;
 
-          if (info.name === "Homide") {
-            times = 2;
-            imgUrl = Homide;
-          } else if (info.name === "Milflox") {
-            times = 4;
-            imgUrl = Milflox;
+          if (info.name === "Optive") {
+            times = 3;
+            imgUrl = Optive;
+          } else if (info.name === "Vigamox") {
+            times = 3;
+            imgUrl = Vigamox;
           } else {
-            switch (week) {
-              case 1:
-                times = 8;
-                break;
-              case 2:
-                times = 6;
-                break;
-              case 3:
-                times = 4;
-                break;
-              case 4:
-                times = 3;
-                break;
-              case 5:
-                times = 2;
-                break;
-              case 6:
-                times = 1;
-                break;
-              default:
-                times = 0; // Default value when week is not 1 to 6
+            if (day_num <= 10) {
+              times = 4;
+            } else if (day_num <= 20) {
+              times = 3;
+            } else if (day_num <= 30) {
+              times = 2;
             }
             imgUrl = Pred_Forte;
           }
 
-          if (week > 1 && info.name === "Homide") {
+          if (day_num > 1 && info.name === "Homide") {
             return;
-          } else if (week > 2 && info.name === "Milflox") {
+          } else if (day_num > 2 && info.name === "Milflox") {
             return;
           } else return <Sections key={index} times={times} name={info.name} imgUrl={imgUrl} done={info.count} buttonClick={() => updateDrop(info.name, info.count + 1, currentTime)} />;
         })}
