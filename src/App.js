@@ -11,6 +11,7 @@ const App = () => {
   // Use State for the Data
   const [dropInfo, setDropInfo] = useState([]);
   const [showtime, setShowtime] = useState("");
+  const [currentTime, setCurrentTime] = useState("");
   const baseURL = "https://drops-back.vercel.app";
   let day_num = 0;
 
@@ -44,7 +45,6 @@ const App = () => {
     minute: "numeric", // "numeric", "2-digit"
     hour12: true, // true or false
   };
-  const currentTime = new Intl.DateTimeFormat("en-US", options).format(currentDate);
 
   // Define a function to update drop information
   const updateDrop = async (name, count, showTime) => {
@@ -56,7 +56,7 @@ const App = () => {
       await fetchDropInfo(formattedDate).then((data) => setDropInfo(data));
       await fetchShowTime().then((data) => setShowtime(data));
     } catch (error) {
-      console.error("Error updating drop:", error);
+      alert("Error updating drop:", error);
     }
   };
 
@@ -67,7 +67,7 @@ const App = () => {
       console.log(response.data.time);
       return response.data.time; // Assuming the response contains the showTime
     } catch (error) {
-      console.error("Error fetching showTime:", error);
+      alert("Error fetching showTime:", error);
       return "";
     }
   };
@@ -80,14 +80,25 @@ const App = () => {
       const response = await Axios.get(`${baseURL}/get-drop-info?formattedDate=${formattedDate}`);
       return response.data; // Assuming the response contains drop information
     } catch (error) {
-      console.error("Error fetching drop information:", error);
+      alert("Error fetching drop information:", error);
       return []; // Return an empty array in case of an error
+    }
+  };
+
+  const createDrop = async () => {
+    try {
+      await Axios.get(`${baseURL}/create-drop`);
+      await fetchDropInfo(formattedDate).then((data) => setDropInfo(data));
+      return null;
+    } catch (error) {
+      alert("Error creating drop");
     }
   };
 
   // Use Effect to fetch the data
   useEffect(() => {
     // Fetch drop information when the component mounts
+    Axios.get(`${baseURL}/create-drop`);
     fetchDropInfo(formattedDate).then((data) => setDropInfo(data));
     fetchShowTime().then((data) => setShowtime(data));
   }, [formattedDate]);
@@ -106,32 +117,52 @@ const App = () => {
       </header>
 
       <main className="App-main">
-        {dropInfo?.map?.((info, index) => {
-          let times, imgUrl;
+        {dropInfo.length === 0 ? (
+          <button className="create-button" onClick={createDrop()}>
+            Create
+          </button>
+        ) : (
+          dropInfo.map((info, index) => {
+            let times, imgUrl;
 
-          if (info.name === "Optive") {
-            times = 3;
-            imgUrl = Optive;
-          } else if (info.name === "Vigamox") {
-            times = 3;
-            imgUrl = Vigamox;
-          } else {
-            if (day_num <= 10) {
-              times = 4;
-            } else if (day_num <= 20) {
+            if (info.name === "Optive") {
               times = 3;
-            } else if (day_num <= 30) {
-              times = 2;
+              imgUrl = Optive;
+            } else if (info.name === "Vigamox") {
+              times = 3;
+              imgUrl = Vigamox;
+            } else {
+              if (day_num <= 10) {
+                times = 4;
+              } else if (day_num <= 20) {
+                times = 3;
+              } else if (day_num <= 30) {
+                times = 2;
+              }
+              imgUrl = Pred_Forte;
             }
-            imgUrl = Pred_Forte;
-          }
 
-          if (day_num > 1 && info.name === "Homide") {
-            return;
-          } else if (day_num > 2 && info.name === "Milflox") {
-            return;
-          } else return <Sections key={index} times={times} name={info.name} imgUrl={imgUrl} done={info.count} buttonClick={() => updateDrop(info.name, info.count + 1, currentTime)} />;
-        })}
+            if (day_num > 1 && info.name === "Homide") {
+              return null;
+            } else if (day_num > 2 && info.name === "Milflox") {
+              return null;
+            } else
+              return (
+                <Sections
+                  key={index}
+                  times={times}
+                  name={info.name}
+                  imgUrl={imgUrl}
+                  done={info.count}
+                  buttonClick={() => {
+                    const updatedTime = new Intl.DateTimeFormat("en-US", options).format(new Date());
+                    setCurrentTime(updatedTime);
+                    updateDrop(info.name, info.count + 1, currentTime);
+                  }}
+                />
+              );
+          })
+        )}
       </main>
     </div>
   );

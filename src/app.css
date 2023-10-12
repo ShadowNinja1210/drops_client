@@ -38,3 +38,13 @@ body {
   flex-direction: column;
   gap: 5px;
 }
+
+.create-button {
+  padding: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 2rem;
+  border-radius: 1.5rem;
+  background-color: #e1e100;
+  margin-top: 5rem;
+}
