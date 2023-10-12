@@ -106,6 +106,8 @@ const App = () => {
 
   return (
     <div className="App">
+      {/* ---------------------------------------- */}
+      {/* Header Section */}
       <header className="App-header">
         <div className="time">
           <h2>Day No.</h2>
@@ -117,7 +119,10 @@ const App = () => {
         </div>
       </header>
 
+      {/* ---------------------------------------- */}
+      {/* Main Section */}
       <main className="App-main">
+        {/* If the array coming from the backend is empty then it will show the button */}
         {dropInfo.length === 0 ? (
           <button className="create-button" onClick={createDrop}>
             Create
@@ -143,11 +148,7 @@ const App = () => {
               imgUrl = Pred_Forte;
             }
 
-            if (day_num > 1 && info.name === "Homide") {
-              return null;
-            } else if (day_num > 2 && info.name === "Milflox") {
-              return null;
-            } else return <Sections key={index} times={times} name={info.name} imgUrl={imgUrl} done={info.count} buttonClick={() => updateDrop(info.name, info.count + 1, currentTime)} />;
+            return <Sections key={index} times={times} name={info.name} imgUrl={imgUrl} done={info.count} buttonClick={() => updateDrop(info.name, info.count + 1, currentTime)} />;
           })
         )}
       </main>
