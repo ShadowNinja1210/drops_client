@@ -59,7 +59,7 @@ const App = () => {
   };
 
   // --------------------------------------------------------------- //
-  // Define a function to fetch drop information
+  // Define a function to fetch time
   const fetchShowTime = async () => {
     try {
       const response = await Axios.get(`${baseURL}/get-showtime`);
@@ -86,9 +86,9 @@ const App = () => {
 
   // --------------------------------------------------------------- //
   // Define a function to create a drop
-  const createDrop = async () => {
+  const createDrop = async (formattedDate) => {
     try {
-      await Axios.get(`${baseURL}/create-drop`);
+      await Axios.get(`${baseURL}/create-drop?formattedDate=${formattedDate}`);
       await fetchDropInfo(formattedDate).then((data) => setDropInfo(data));
       return null;
     } catch (error) {
@@ -99,10 +99,10 @@ const App = () => {
   // --------------------------------------------------------------- //
   // Use Effect to fetch the data
   useEffect(() => {
-    Axios.get(`${baseURL}/create-drop`);
+    createDrop(formattedDate);
     fetchDropInfo(formattedDate).then((data) => setDropInfo(data));
     fetchShowTime().then((data) => setShowtime(data));
-  }, [formattedDate]);
+  }, []);
 
   return (
     <div className="App">
