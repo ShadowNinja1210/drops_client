@@ -1,4 +1,5 @@
 import Sections from "./components/Sections";
+import Loader from "./components/Loader";
 import Axios from "axios";
 import Vigamox from "./assets/Vigamox.jpg";
 import Optive from "./assets/Optive.jpg";
@@ -11,6 +12,7 @@ const App = () => {
   // Use State for the Data
   const [dropInfo, setDropInfo] = useState([]);
   const [showtime, setShowtime] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const baseURL = "https://drops-back.vercel.app";
   let day_num = 0;
 
@@ -49,8 +51,16 @@ const App = () => {
   const updateDrop = async (name, count, showTime) => {
     try {
       console.log("POST Request", name, count, showTime);
-      await Axios.post(`${baseURL}/update-drop`, { name, count, formattedDate });
+      setIsLoading(true);
+      const response = await Axios.post(`${baseURL}/update-drop`, { name, count, formattedDate });
       await Axios.post(`${baseURL}/update-showtime`, { showTime: showTime });
+
+      const responseData = response.data;
+
+      if (responseData.success === true) {
+        setIsLoading(false);
+      } else {
+      }
       await fetchDropInfo(formattedDate).then((data) => setDropInfo(data));
       await fetchShowTime().then((data) => setShowtime(data));
     } catch (error) {
@@ -105,53 +115,61 @@ const App = () => {
   }, []);
 
   return (
-    <div className="App">
-      {/* ---------------------------------------- */}
-      {/* Header Section */}
-      <header className="App-header">
-        <div className="time">
-          <h2>Day No.</h2>
-          <h1>{day_num}</h1>
-        </div>
-        <div className="time">
-          <h2>Last updated</h2>
-          <h1>{showtime}</h1>
-        </div>
-      </header>
+    <div>
+      {isLoading ? (
+        <>
+          <Loader content="Loading..." />
+        </>
+      ) : (
+        <>
+          {/* ---------------------------------------- */}
+          {/* Header Section */}
+          <header className="App-header">
+            <div className="time">
+              <h2>Day No.</h2>
+              <h1>{day_num}</h1>
+            </div>
+            <div className="time">
+              <h2>Last updated</h2>
+              <h1>{showtime}</h1>
+            </div>
+          </header>
 
-      {/* ---------------------------------------- */}
-      {/* Main Section */}
-      <main className="App-main">
-        {/* If the array coming from the backend is empty then it will show the button */}
-        {dropInfo.length === 0 ? (
-          <button className="create-button" onClick={createDrop}>
-            Create
-          </button>
-        ) : (
-          dropInfo.map((info, index) => {
-            let times, imgUrl;
+          {/* ---------------------------------------- */}
+          {/* Main Section */}
+          <main className="App-main">
+            {/* If the array coming from the backend is empty then it will show the button */}
+            {dropInfo.length === 0 ? (
+              <button className="create-button" onClick={createDrop}>
+                Create
+              </button>
+            ) : (
+              dropInfo.map((info, index) => {
+                let times, imgUrl;
 
-            if (info.name === "Optive") {
-              times = 3;
-              imgUrl = Optive;
-            } else if (info.name === "Vigamox") {
-              times = 3;
-              imgUrl = Vigamox;
-            } else {
-              if (day_num <= 10) {
-                times = 4;
-              } else if (day_num <= 20) {
-                times = 3;
-              } else if (day_num <= 30) {
-                times = 2;
-              }
-              imgUrl = Pred_Forte;
-            }
+                if (info.name === "Optive") {
+                  times = 3;
+                  imgUrl = Optive;
+                } else if (info.name === "Vigamox") {
+                  times = 3;
+                  imgUrl = Vigamox;
+                } else {
+                  imgUrl = Pred_Forte;
+                  if (day_num <= 10) {
+                    times = 4;
+                  } else if (day_num <= 20) {
+                    times = 3;
+                  } else if (day_num <= 30) {
+                    times = 2;
+                  }
+                }
 
-            return <Sections key={index} times={times} name={info.name} imgUrl={imgUrl} done={info.count} buttonClick={() => updateDrop(info.name, info.count + 1, currentTime)} />;
-          })
-        )}
-      </main>
+                return <Sections key={index} times={times} name={info.name} imgUrl={imgUrl} done={info.count} buttonClick={() => updateDrop(info.name, info.count + 1, currentTime)} />;
+              })
+            )}
+          </main>
+        </>
+      )}
     </div>
   );
 };

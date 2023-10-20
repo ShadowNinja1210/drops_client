@@ -68,3 +68,16 @@
 .checks.done div {
   background-color: #00ff00;
 }
+
+/* -------------------------------------------- */
+/* For Loader */
+.loader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+}
