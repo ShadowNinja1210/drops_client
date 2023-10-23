@@ -61,7 +61,6 @@ const App = () => {
 
       if (responseData.success === true) {
         setIsLoading(false);
-      } else {
       }
       await fetchDropInfo(formattedDate).then((data) => setDropInfo(data));
       await fetchShowTime().then((data) => setShowtime(data));
@@ -104,8 +103,13 @@ const App = () => {
   // Define a function to create a drop
   const createDrop = async (formattedDate) => {
     try {
-      await Axios.get(`${baseURL}/create-drop?formattedDate=${formattedDate}`);
+      setIsLoading(true);
+      const response = await Axios.get(`${baseURL}/create-drop?formattedDate=${formattedDate}`);
       await fetchDropInfo(formattedDate).then((data) => setDropInfo(data));
+      const responseData = response.data;
+      if (responseData.success === true) {
+        setIsLoading(false);
+      }
       return null;
     } catch (error) {
       alert("Error creating drop");
