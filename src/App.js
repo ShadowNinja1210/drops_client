@@ -149,37 +149,31 @@ const App = () => {
           {/* Main Section */}
           <main className="App-main">
             {/* If the array coming from the backend is empty then it will show the button */}
-            {dropInfo.length === 0 ? (
-              <button className="create-button" onClick={createDrop}>
-                Create
-              </button>
-            ) : (
-              dropInfo.map((info, index) => {
-                let times, imgUrl;
+            {dropInfo.map((info, index) => {
+              let times, imgUrl;
 
-                if (info.name === "Iotim") {
+              if (info.name === "Iotim") {
+                times = 2;
+                imgUrl = Iotim;
+              } else if (info.name === "Optive") {
+                times = 3;
+                imgUrl = Optive;
+              } else if (info.name === "Vigamox") {
+                times = 3;
+                imgUrl = Vigamox;
+              } else {
+                imgUrl = Pred_Forte;
+                if (day_num <= 10) {
+                  times = 4;
+                } else if (day_num <= 20) {
+                  times = 3;
+                } else if (day_num <= 30) {
                   times = 2;
-                  imgUrl = Iotim;
-                } else if (info.name === "Optive") {
-                  times = 3;
-                  imgUrl = Optive;
-                } else if (info.name === "Vigamox") {
-                  times = 3;
-                  imgUrl = Vigamox;
-                } else {
-                  imgUrl = Pred_Forte;
-                  if (day_num <= 10) {
-                    times = 4;
-                  } else if (day_num <= 20) {
-                    times = 3;
-                  } else if (day_num <= 30) {
-                    times = 2;
-                  }
                 }
+              }
 
-                return <Sections key={index} times={times} name={info.name} imgUrl={imgUrl} done={info.count} buttonClick={() => updateDrop(info.name, info.count + 1)} />;
-              })
-            )}
+              return <Sections key={index} times={times} name={info.name} imgUrl={imgUrl} done={info.count} buttonClick={() => updateDrop(info.name, info.count + 1)} />;
+            })}
           </main>
         </>
       )}
