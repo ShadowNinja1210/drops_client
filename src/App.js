@@ -88,7 +88,11 @@ const App = () => {
   const fetchDropInfo = async (formattedDate) => {
     try {
       console.log(formattedDate);
+      setIsLoading(true);
       const response = await Axios.get(`${baseURL}/get-drop-info?formattedDate=${formattedDate}`);
+      if (response.data.length !== 0) {
+        setIsLoading(false);
+      }
       return response.data;
     } catch (error) {
       alert("Error fetching drop information:", error);
