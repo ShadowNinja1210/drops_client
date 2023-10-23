@@ -3,6 +3,7 @@ import Loader from "./components/Loader";
 import Axios from "axios";
 import Vigamox from "./assets/Vigamox.jpg";
 import Optive from "./assets/Optive.jpg";
+import Iotim from "./assets/Iotim.jpg";
 import Pred_Forte from "./assets/Pred_Forte.jpg";
 import "./app.css";
 import { useEffect, useState } from "react";
@@ -44,12 +45,13 @@ const App = () => {
     minute: "numeric",
     hour12: true,
   };
-  let currentTime = new Intl.DateTimeFormat("en-US", options).format(currentDate);
 
   // --------------------------------------------------------------- //
   // Define a function to update drop information
-  const updateDrop = async (name, count, showTime) => {
+  const updateDrop = async (name, count) => {
     try {
+      const currentTime = new Date();
+      const showTime = new Intl.DateTimeFormat("en-US", options).format(currentTime);
       console.log("POST Request", name, count, showTime);
       setIsLoading(true);
       const response = await Axios.post(`${baseURL}/update-drop`, { name, count, formattedDate });
@@ -147,7 +149,10 @@ const App = () => {
               dropInfo.map((info, index) => {
                 let times, imgUrl;
 
-                if (info.name === "Optive") {
+                if (info.name === "Iotim") {
+                  times = 2;
+                  imgUrl = Iotim;
+                } else if (info.name === "Optive") {
                   times = 3;
                   imgUrl = Optive;
                 } else if (info.name === "Vigamox") {
@@ -164,7 +169,7 @@ const App = () => {
                   }
                 }
 
-                return <Sections key={index} times={times} name={info.name} imgUrl={imgUrl} done={info.count} buttonClick={() => updateDrop(info.name, info.count + 1, currentTime)} />;
+                return <Sections key={index} times={times} name={info.name} imgUrl={imgUrl} done={info.count} buttonClick={() => updateDrop(info.name, info.count + 1)} />;
               })
             )}
           </main>
