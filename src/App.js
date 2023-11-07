@@ -169,6 +169,8 @@ const App = () => {
                   times = 3;
                 } else if (day_num <= 30) {
                   times = 2;
+                } else (day_num > 30) {
+                  times = 1;
                 }
               }
 
