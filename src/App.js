@@ -1,10 +1,8 @@
 import Sections from "./components/Sections";
 import Loader from "./components/Loader";
 import Axios from "axios";
-import Vigamox from "./assets/Vigamox.jpg";
-import Optive from "./assets/Optive.jpg";
 import Iotim from "./assets/Iotim.jpg";
-import Pred_Forte from "./assets/Pred_Forte.jpg";
+import Nepastar from "./assets/Nepastar.jpg";
 import "./app.css";
 import { useEffect, useState } from "react";
 
@@ -35,7 +33,7 @@ const App = () => {
     const daysDiff = timeDiff / (1000 * 3600 * 24);
     return Math.abs(Math.floor(daysDiff));
   }
-  const startDate = new Date("October 07, 2023");
+  const startDate = new Date("November 15, 2023");
   day_num = Math.ceil(dateDiffInDays(startDate, currentDate) + 1);
 
   // --------------------------------------------------------------- //
@@ -155,21 +153,9 @@ const App = () => {
               if (info.name === "Iotim") {
                 times = 2;
                 imgUrl = Iotim;
-              } else if (info.name === "Optive") {
-                times = 3;
-                imgUrl = Optive;
-              } else if (info.name === "Vigamox") {
-                times = 3;
-                imgUrl = Vigamox;
-              } else {
-                imgUrl = Pred_Forte;
-                if (day_num <= 10) {
-                  times = 4;
-                } else if (day_num <= 20) {
-                  times = 3;
-                } else if (day_num <= 30) {
-                  times = 2;
-                }
+              } else if (info.name === "Nepastar") {
+                times = 1;
+                imgUrl = Nepastar;
               }
 
               return <Sections key={index} times={times} name={info.name} imgUrl={imgUrl} done={info.count} buttonClick={() => updateDrop(info.name, info.count + 1)} />;
