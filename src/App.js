@@ -153,31 +153,10 @@ const App = () => {
               if (info.name === "Iotim") {
                 times = 2;
                 imgUrl = Iotim;
-<<<<<<< HEAD
               } else if (info.name === "Nepastar") {
                 times = 1;
                 imgUrl = Nepastar;
-=======
-              } else if (info.name === "Optive") {
-                times = 3;
-                imgUrl = Optive;
-              } else if (info.name === "Vigamox") {
-                times = 3;
-                imgUrl = Vigamox;
-              } else {
-                imgUrl = Pred_Forte;
-                if (day_num <= 10) {
-                  times = 4;
-                } else if (day_num <= 20) {
-                  times = 3;
-                } else if (day_num <= 30) {
-                  times = 2;
-                } else {
-                  times = 1;
-                }
->>>>>>> ff286434cf68343b0ebaa482b2bf5692369b336e
               }
-
               return <Sections key={index} times={times} name={info.name} imgUrl={imgUrl} done={info.count} buttonClick={() => updateDrop(info.name, info.count + 1)} />;
             })}
           </main>
