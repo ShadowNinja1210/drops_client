@@ -1,8 +1,9 @@
 import Sections from "./components/Sections";
 import Loader from "./components/Loader";
 import Axios from "axios";
-import Iotim from "./assets/Iotim.jpg";
-import Nepastar from "./assets/Nepastar.jpg";
+import Pred_Forte from "./assets/Pred_Forte.jpg";
+import Homide from "./assets/Homide.jpg";
+import Vigamox from "./assets/Vigamox.jpg";
 import "./app.css";
 import { useEffect, useState } from "react";
 
@@ -13,6 +14,7 @@ const App = () => {
   const [showtime, setShowtime] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const baseURL = "https://drops-back.vercel.app";
+  // const baseURL = "http://localhost:3500";
   let day_num = 0;
 
   // --------------------------------------------------------------- //
@@ -33,7 +35,7 @@ const App = () => {
     const daysDiff = timeDiff / (1000 * 3600 * 24);
     return Math.abs(Math.floor(daysDiff));
   }
-  const startDate = new Date("November 15, 2023");
+  const startDate = new Date("December 20, 2023");
   day_num = Math.ceil(dateDiffInDays(startDate, currentDate) + 1);
 
   // --------------------------------------------------------------- //
@@ -150,14 +152,26 @@ const App = () => {
             {dropInfo.map((info, index) => {
               let times, imgUrl;
 
-              if (info.name === "Iotim") {
+              if (info.name === "Pred Forte") {
+                times = 10;
+                imgUrl = Pred_Forte;
+              } else if (info.name === "Vigamox") {
+                times = 4;
+                imgUrl = Vigamox;
+              } else if (info.name === "Homide") {
                 times = 2;
-                imgUrl = Iotim;
-              } else if (info.name === "Nepastar") {
-                times = 1;
-                imgUrl = Nepastar;
+                imgUrl = Homide;
               }
-              return <Sections key={index} times={times} name={info.name} imgUrl={imgUrl} done={info.count} buttonClick={() => updateDrop(info.name, info.count + 1)} />;
+              return (
+                <Sections
+                  key={index}
+                  times={times}
+                  name={info.name}
+                  imgUrl={imgUrl}
+                  done={info.count}
+                  buttonClick={() => updateDrop(info.name, info.count + 1)}
+                />
+              );
             })}
           </main>
         </>
