@@ -15,7 +15,6 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const baseURL = "https://drops-back.vercel.app";
   // const baseURL = "http://localhost:3500";
-  let day_num = 0;
 
   // --------------------------------------------------------------- //
   // Define a function to format the date
@@ -36,7 +35,9 @@ const App = () => {
     return Math.abs(Math.floor(daysDiff));
   }
   const startDate = new Date("December 20, 2023");
-  day_num = Math.ceil(dateDiffInDays(startDate, currentDate) + 1);
+  const day_num = Math.ceil(dateDiffInDays(startDate, currentDate) + 1);
+  const week_num = Math.ceil(day_num / 7);
+  const week_current = Math.ceil(day_num - (week_num - 1) * 7);
 
   // --------------------------------------------------------------- //
   // Define a function to format the time
@@ -136,8 +137,11 @@ const App = () => {
           {/* Header Section */}
           <header className="App-header">
             <div className="time">
-              <h2>Day No.</h2>
-              <h1>{day_num}</h1>
+              <h2>Week</h2>
+              <h1>
+                {week_num}
+                <sup className="week-current"> {week_current}/7</sup>
+              </h1>
             </div>
             <div className="time">
               <h2>Last updated</h2>
@@ -153,7 +157,21 @@ const App = () => {
               let times, imgUrl;
 
               if (info.name === "Pred Forte") {
-                times = 10;
+                if (week_num === 1) {
+                  times = 10;
+                } else if (week_num === 2) {
+                  times = 8;
+                } else if (week_num === 3) {
+                  times = 6;
+                } else if (week_num === 4) {
+                  times = 4;
+                } else if (week_num === 5) {
+                  times = 3;
+                } else if (week_num === 6) {
+                  times = 2;
+                } else if (week_num === 7) {
+                  times = 1;
+                }
                 imgUrl = Pred_Forte;
               } else if (info.name === "Vigamox") {
                 times = 4;
