@@ -2,7 +2,8 @@ import Sections from "./components/Sections";
 import Loader from "./components/Loader";
 import Axios from "axios";
 import Pred_Forte from "./assets/Pred_Forte.jpg";
-import Homide from "./assets/Homide.jpg";
+import Dorzox from "./assets/Dorzox.jpg";
+import Raiki from "./assets/Raiki.jpg";
 import Vigamox from "./assets/Vigamox.jpg";
 import "./app.css";
 import { useEffect, useState } from "react";
@@ -14,7 +15,7 @@ const App = () => {
   const [showtime, setShowtime] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const baseURL = "https://drops-back.vercel.app";
-  // const baseURL = "http://localhost:3500";
+  // const baseURL = "https://localhost:3500";
 
   // --------------------------------------------------------------- //
   // Define a function to format the date
@@ -176,9 +177,12 @@ const App = () => {
               } else if (info.name === "Vigamox") {
                 times = 4;
                 imgUrl = Vigamox;
-              } else if (info.name === "Homide") {
-                times = 2;
-                imgUrl = Homide;
+              } else if (info.name === "Raiki") {
+                times = 3;
+                imgUrl = Raiki;
+              } else if (info.name === "Dorzox") {
+                times = 3;
+                imgUrl = Dorzox;
               }
               return (
                 <Sections
